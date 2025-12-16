@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Road Trip Californie</title>
+    
+    <!-- --- CONFIGURATION IPHONE (PWA) --- -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="30 Ans Cali">
+    
+    <!-- ICÔNE GÉNÉRÉE AUTOMATIQUEMENT (Pas besoin de fichier image externe !) -->
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF9A8B;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%23FF6A88;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23FFE53B;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' fill='url(%23grad)'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial, sans-serif' font-weight='bold' font-size='200' fill='white'%3E30%3C/text%3E%3Ctext x='50%25' y='78%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial, sans-serif' font-weight='bold' font-size='60' fill='white' letter-spacing='10'%3ECALI%3C/text%3E%3C/svg%3E">
+    <!-- Fallback pour les navigateurs (Favicon) -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF9A8B;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%23FF6A88;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23FFE53B;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' fill='url(%23grad)'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial, sans-serif' font-weight='bold' font-size='200' fill='white'%3E30%3C/text%3E%3C/svg%3E">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Polices Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600&family=Pacifico&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'dream-pink': '#FF9A8B',
+                        'dream-orange': '#FF6A88',
+                        'dream-purple': '#FF99AC',
+                        'dream-blue': '#8CB5FF',
+                        'dream-yellow': '#FFE53B',
+                        'dream-text': '#4A4A4A',
+                    },
+                    fontFamily: {
+                        'magic': ['Pacifico', 'cursive'], 
+                        'fun': ['Fredoka', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'dream-gradient': "linear-gradient(135deg, #FF9A8B 0%, #FF6A88 55%, #FF99AC 100%)",
+                        'card-gradient': "linear-gradient(to bottom right, rgba(255,255,255,0.95), rgba(255,255,255,0.85))",
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #8CB5FF 0%, #FF99AC 50%, #FFE53B 100%);
+            overscroll-behavior-y: none; 
+        }
+
+        .safe-padding-top { padding-top: env(safe-area-inset-top); }
+        .safe-padding-bottom { padding-bottom: env(safe-area-inset-bottom); }
+
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            70% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .pop-animate {
+            animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        .float-animate {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        .sparkle-effect::before {
+            content: '✨';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 1.5rem;
+            animation: sparkle 2s infinite;
+        }
+        .sparkle-effect::after {
+            content: '✨';
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 1.2rem;
+            animation: sparkle 3s infinite reverse;
+        }
+        
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 font-fun safe-padding-top safe-padding-bottom">
+
+    <!-- CONTAINER MOBILE -->
+    <div class="w-full max-w-md bg-white/40 backdrop-blur-xl h-[90vh] rounded-[40px] shadow-2xl overflow-hidden relative flex flex-col border-4 border-white/60">
+        
+        <!-- HEADER AVEC COMPTE À REBOURS -->
+        <header class="bg-dream-gradient p-6 pt-10 rounded-t-[36px] text-center relative z-10 shadow-lg shrink-0">
+            <div class="absolute top-4 left-6 text-2xl opacity-80 animate-pulse">✨</div>
+            <div class="absolute top-8 right-8 text-xl opacity-60 animate-pulse delay-300">⭐</div>
+
+            <p class="font-fun text-white text-lg mb-1 drop-shadow-sm">Joyeux 30 Ans !</p>
+            <h1 class="font-magic text-4xl text-white tracking-wide drop-shadow-md mb-4">California Dream</h1>
+            
+            <div id="countdown-box" class="bg-white/20 backdrop-blur-sm rounded-2xl p-3 border border-white/30 inline-flex items-center justify-center gap-3 shadow-inner">
+                <div class="text-center w-12">
+                    <span id="cd-days" class="font-magic text-2xl text-white block leading-none drop-shadow">00</span>
+                    <span class="font-fun text-[9px] text-white/90 uppercase tracking-wide">Jours</span>
+                </div>
+                <div class="text-white/60 font-magic text-xl pb-2">:</div>
+                <div class="text-center w-12">
+                    <span id="cd-hours" class="font-magic text-2xl text-white block leading-none drop-shadow">00</span>
+                    <span class="font-fun text-[9px] text-white/90 uppercase tracking-wide">Heures</span>
+                </div>
+                <div class="text-white/60 font-magic text-xl pb-2">:</div>
+                <div class="text-center w-12">
+                    <span id="cd-minutes" class="font-magic text-2xl text-white block leading-none drop-shadow">00</span>
+                    <span class="font-fun text-[9px] text-white/90 uppercase tracking-wide">Min</span>
+                </div>
+            </div>
+            <p class="text-[10px] text-white/80 mt-2 font-fun italic">Avant le grand décollage ✈️</p>
+        </header>
+
+        <!-- GRID SCROLLABLE -->
+        <main class="flex-grow overflow-y-auto no-scrollbar p-4">
+            <div class="grid grid-cols-2 gap-4" id="days-grid">
+                <!-- Les cartes seront générées ici -->
+            </div>
+            <div class="h-16"></div>
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="absolute bottom-0 w-full bg-white/80 backdrop-blur-md p-3 text-center z-20 rounded-b-[36px] pb-8">
+            <button onclick="toggleGodMode()" id="god-btn" class="text-[10px] font-bold tracking-widest text-dream-text/40 hover:text-dream-orange transition-colors uppercase">
+                🔒 Mode Surprise (Actif)
+            </button>
+        </footer>
+
+        <!-- MODAL MAGIQUE -->
+        <div id="modal" class="absolute inset-0 z-50 hidden bg-dream-blue/40 backdrop-blur-sm p-4 flex items-center justify-center transition-opacity duration-300">
+            <div id="modal-content" class="bg-card-gradient w-full max-w-sm shadow-2xl pop-animate hidden relative overflow-hidden p-6 rounded-[32px] border-4 border-white sparkle-effect max-h-[85vh] overflow-y-auto no-scrollbar">
+                
+                <button onclick="closeModal()" class="absolute top-4 right-4 text-dream-text/30 hover:text-dream-orange transition text-2xl font-bold">&times;</button>
+
+                <div class="text-center pb-4">
+                    <div id="modal-icon" class="text-6xl mb-2 animate-bounce drop-shadow-md inline-block">🚠</div>
+                    <p class="font-fun text-xs font-bold tracking-widest text-dream-orange uppercase mb-1">Chapitre du Jour</p>
+                    <h2 id="modal-date" class="font-magic text-3xl text-dream-purple drop-shadow-sm">14 Déc.</h2>
+                </div>
+
+                <div class="text-center relative z-10 mb-6">
+                    <h3 id="modal-title" class="font-fun font-bold text-xl text-dream-text mb-3 leading-tight">Titre</h3>
+                    <p id="modal-desc" class="font-fun text-sm text-dream-text/70 leading-relaxed px-2">Description...</p>
+                </div>
+
+                <div class="space-y-3 mb-6">
+                    <div class="bg-white/60 rounded-xl p-3 flex items-center gap-3 border border-white shadow-sm">
+                        <div class="bg-dream-pink/20 p-2 rounded-full text-xl">👠</div>
+                        <div class="text-left">
+                            <p class="text-[10px] uppercase font-bold text-dream-pink tracking-wider">Manolo-mètre</p>
+                            <p id="modal-dress" class="text-xs font-semibold text-dream-text/80">Tenue confortable...</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/60 rounded-xl p-3 flex items-center gap-3 border border-white shadow-sm">
+                        <div class="bg-dream-blue/20 p-2 rounded-full text-xl">📸</div>
+                        <div class="text-left">
+                            <p class="text-[10px] uppercase font-bold text-dream-blue tracking-wider">Défi Insta-Magic</p>
+                            <p id="modal-photo" class="text-xs font-semibold text-dream-text/80">Selfie avec...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                     <div class="inline-block bg-dream-yellow/20 px-4 py-2 rounded-full border border-dream-yellow/50 transform -rotate-1 shadow-sm">
+                        <p class="text-sm font-bold text-dream-text/90" id="modal-clue">L'indice...</p>
+                    </div>
+                </div>
+
+                <div class="pt-6">
+                    <button onclick="closeModal()" class="w-full bg-dream-gradient text-white font-bold py-3 rounded-2xl hover:brightness-110 transition shadow-md text-xs tracking-widest uppercase transform active:scale-95">
+                        Fermer le livre ✨
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase (Structure) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        if (Object.keys(firebaseConfig).length > 0) {
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+            signInAnonymously(auth).catch(() => {});
+        }
+    </script>
+
+    <script>
+        // --- DONNÉES ---
+        const tripData = [
+            {
+                day: 14,
+                emoji: "🌉",
+                title: "Premiers Frissons",
+                desc: "Le livre s'ouvre sur le chant de l'océan. Une arrivée en douceur et une première ascension musicale dans les rues penchées.",
+                clue: "Ding Ding ! 🔔",
+                dress: "Confort Chic (baskets obligatoires pour l'avion & la marche !)",
+                photo: "Un selfie avec un wagon qui grimpe tout seul.",
+                color: "from-dream-pink to-dream-orange"
+            },
+            {
+                day: 15,
+                emoji: "🧚‍♀️",
+                title: "La Tête dans les Nuages",
+                desc: "Nous allons voler au-dessus de l'eau ! Puis, flânerie de luxe. Prépare-toi à être éblouie.",
+                clue: "Des ailes sur l'eau ✨",
+                dress: "Casual le matin, Lunettes de Star l'après-midi.",
+                photo: "Tes pieds (ou nous) avec le Golden Gate en tout petit en bas.",
+                color: "from-dream-blue to-dream-purple"
+            },
+            {
+                day: 16,
+                emoji: "🚲",
+                title: "Roues Libres & Magie",
+                desc: "Les cheveux au vent sur deux roues, puis on récupère notre carrosse. Fin de journée face au gardien rouge.",
+                clue: "Le Géant Écarlate ❤️",
+                dress: "Sporty Spice (mais stylée pour les photos).",
+                photo: "Le Pont Rouge sous son meilleur profil.",
+                color: "from-dream-yellow to-dream-orange"
+            },
+            {
+                day: 17,
+                emoji: "👑",
+                title: "Ton Jour de Fête",
+                desc: "Joyeux Anniversaire ! Baleines le matin, et un dîner de princesse accessible par un petit train magique.",
+                clue: "Un festin enchanté 🎂",
+                dress: "Chaud et étanche le matin, Cendrillon le soir (sors les talons !).",
+                photo: "Toi, reine du monde, sur le ponton en bois.",
+                color: "from-dream-pink to-dream-purple"
+            },
+            {
+                day: 18,
+                emoji: "🌊",
+                title: "La Route des Merveilles",
+                desc: "La route mythique où la terre plonge dans la mer. Des cascades sur le sable et des panoramas infinis.",
+                clue: "Le grand bleu 🐋",
+                dress: "Bohème Road-trip (chapeau conseillé).",
+                photo: "La cascade qui tombe directement dans l'océan.",
+                color: "from-dream-blue to-dream-yellow"
+            },
+            {
+                day: 19,
+                emoji: "🍭",
+                title: "Couleurs & Folie",
+                desc: "Du rose bonbon kitschissime le matin, et l'ambiance cool des skateurs et des canaux l'après-midi.",
+                clue: "Un monde tout rose 💖",
+                dress: "Colorée ! Rose ou Vintage pour matcher avec le décor.",
+                photo: "Le truc le plus kitsch que tu trouveras au petit-déjeuner.",
+                color: "from-dream-orange to-dream-pink"
+            },
+            {
+                day: 20,
+                emoji: "🎬",
+                title: "Sous les Projecteurs",
+                desc: "On chasse les lettres blanches géantes ! Soirée rétro romantique comme dans un vieux film.",
+                clue: "Hooray for Hollywood ⭐",
+                dress: "Starlette incognito (lunettes noires indispensables).",
+                photo: "Les lettres H-O-L-L-Y-W-O-O-D (de loin ou de près).",
+                color: "from-dream-purple to-dream-blue"
+            },
+            {
+                day: 21,
+                emoji: "🏎️",
+                title: "Trésors & Souvenirs",
+                desc: "Des belles voitures d'époque et un dernier shopping pour ramener un peu de Californie à la maison.",
+                clue: "Beautés d'antan 🕰️",
+                dress: "Cool & Pratique pour essayer des vêtements.",
+                photo: "Une voiture ancienne qui brille au soleil.",
+                color: "from-dream-yellow to-dream-orange"
+            },
+            {
+                day: 22,
+                emoji: "✈️",
+                title: "Le Retour au Château",
+                desc: "On boucle les valises, la tête pleine de rêves. C'est l'heure de rentrer, mais la magie reste.",
+                clue: "À bientôt les étoiles 👋",
+                dress: "Le Pyjama d'avion le plus confortable du monde.",
+                photo: "Un dernier regard triste (mais heureux) vers les palmiers.",
+                color: "from-dream-pink to-dream-purple"
+            }
+        ];
+
+        // --- COMPTE À REBOURS (CIBLE 2025) ---
+        function startCountdown() {
+            // Date cible : 14 Décembre 2025
+            const targetDate = new Date('2025-12-14T00:00:00').getTime();
+
+            const timer = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+
+                if (distance < 0) {
+                    clearInterval(timer);
+                    document.getElementById("countdown-box").innerHTML = "<span class='font-magic text-white text-xl animate-pulse'>C'est parti ! ✈️</span>";
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+                document.getElementById("cd-days").innerText = days < 10 ? "0" + days : days;
+                document.getElementById("cd-hours").innerText = hours < 10 ? "0" + hours : hours;
+                document.getElementById("cd-minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+            }, 1000);
+        }
+
+        // --- UI LOGIQUE ---
+
+        let godMode = false;
+
+        function toggleGodMode() {
+            godMode = !godMode;
+            renderGrid();
+            const btn = document.getElementById('god-btn');
+            btn.textContent = godMode 
+                ? "🔓 Mode Test (Tout est ouvert)" 
+                : "🔒 Mode Surprise (Actif)";
+            btn.className = godMode 
+                ? "text-[10px] font-bold tracking-widest text-dream-orange animate-pulse uppercase" 
+                : "text-[10px] font-bold tracking-widest text-dream-text/40 hover:text-dream-orange transition-colors uppercase";
+        }
+
+        function isUnlocked(day) {
+            // Si le mode test est activé, on ouvre tout
+            if (godMode) return true;
+            
+            // Logique réelle basée sur la date
+            const now = new Date();
+            const currentYear = 2025; // Année réglée sur 2025
+            // Note : les mois commencent à 0 en JS (11 = Décembre)
+            const targetDate = new Date(currentYear, 11, day, 0, 0, 0); 
+            
+            // Si on est APRÈS ou PENDANT le jour cible, c'est débloqué
+            // Cela assure l'ouverture séquentielle (jour après jour)
+            return now.getTime() >= targetDate.getTime();
+        }
+
+        function openModal(index) {
+            const data = tripData[index];
+            
+            if (!isUnlocked(data.day)) {
+                const card = document.getElementById(`day-${index}`);
+                card.classList.add('animate-bounce');
+                setTimeout(() => card.classList.remove('animate-bounce'), 500);
+                // Petit message pour expliquer pourquoi ça ne s'ouvre pas
+                // alert("Patience ! Ce chapitre ne s'ouvrira que le " + data.day + " décembre !");
+                return;
+            }
+
+            document.getElementById('modal-date').innerText = `${data.day} DÉC.`;
+            document.getElementById('modal-icon').innerText = data.emoji;
+            document.getElementById('modal-title').innerText = data.title;
+            document.getElementById('modal-desc').innerText = data.desc;
+            document.getElementById('modal-clue').innerText = data.clue;
+            document.getElementById('modal-dress').innerText = data.dress;
+            document.getElementById('modal-photo').innerText = data.photo;
+
+            const modal = document.getElementById('modal');
+            const content = document.getElementById('modal-content');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                content.classList.remove('hidden');
+            }, 50);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            const content = document.getElementById('modal-content');
+            content.classList.add('hidden');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function renderGrid() {
+            const grid = document.getElementById('days-grid');
+            grid.innerHTML = '';
+
+            tripData.forEach((data, index) => {
+                const unlocked = isUnlocked(data.day);
+                const opacity = unlocked ? 'opacity-100' : 'opacity-60 grayscale';
+                const lockIcon = unlocked ? '' : '<span class="absolute top-3 right-3 text-xl opacity-60 bg-white/30 rounded-full p-1 drop-shadow-sm">🔒</span>';
+                
+                const card = document.createElement('div');
+                card.id = `day-${index}`;
+                card.className = `
+                    relative h-40 rounded-3xl p-4 flex flex-col justify-between 
+                    bg-gradient-to-br ${data.color} ${opacity} shadow-md hover:shadow-xl cursor-pointer overflow-hidden group
+                    transition-all duration-300 transform hover:-translate-y-1 border-2 border-white/50
+                `;
+                
+                const pattern = `
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-white/20 rounded-full blur-md group-hover:scale-150 transition-transform duration-500"></div>
+                    <div class="absolute -left-4 -bottom-4 w-16 h-16 bg-white/10 rounded-full blur-sm group-hover:scale-125 transition-transform duration-500 delay-100"></div>
+                `;
+
+                card.innerHTML = `
+                    ${pattern}
+                    ${lockIcon}
+                    <div>
+                        <span class="font-fun text-[10px] font-bold text-white/80 tracking-widest uppercase block mb-1">Décembre</span>
+                        <div class="text-white font-magic text-3xl drop-shadow-md">${data.day}</div>
+                    </div>
+                    <div class="flex justify-end items-end">
+                        <span class="text-4xl transform group-hover:scale-110 transition-transform filter drop-shadow-sm float-animate">${unlocked ? data.emoji : '✨'}</span>
+                    </div>
+                `;
+                
+                card.onclick = () => openModal(index);
+                grid.appendChild(card);
+            });
+        }
+
+        // Init
+        renderGrid();
+        startCountdown();
+    </script>
+</body>
+</html>
